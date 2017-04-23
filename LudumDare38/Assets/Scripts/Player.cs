@@ -7,6 +7,7 @@ public class Player : Character
     private void Start()
     {
         Instance = this;
+        MessageBox.Instance.SetMessage("You are a pain in the ass", false);
     }
 
     private void Update()
