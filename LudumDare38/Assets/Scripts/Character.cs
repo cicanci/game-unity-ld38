@@ -15,10 +15,12 @@ public class Character : MonoBehaviour
         Defeated
     }
 
+    public static Character Instance { private set; get; }
     public ECharaterState CurrentState { private set; get; }
 
     private void Awake()
     {
+        Instance = this;
         CurrentState = ECharaterState.Idle;
         _playerAnimatior = GetComponent<Animator>();
     }
@@ -30,21 +32,24 @@ public class Character : MonoBehaviour
 
     public void ChangeState(ECharaterState state)
     {
-        CurrentState = state;
-
-        switch (state)
+        if (CurrentState != state)
         {
-            case ECharaterState.Idle:
-                _playerAnimatior.Play(_animationIdle);
-                break;
-            case ECharaterState.Shoot:
-                _playerAnimatior.Play(_animationShoot);
-                break;
-            case ECharaterState.Defeated:
-                _playerAnimatior.Play(_animationDefeated);
-                break;
-            default:
-                break;
+            CurrentState = state;
+
+            switch (state)
+            {
+                case ECharaterState.Idle:
+                    _playerAnimatior.Play(_animationIdle);
+                    break;
+                case ECharaterState.Shoot:
+                    _playerAnimatior.Play(_animationShoot);
+                    break;
+                case ECharaterState.Defeated:
+                    _playerAnimatior.Play(_animationDefeated);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
