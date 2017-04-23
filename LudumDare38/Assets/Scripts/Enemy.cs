@@ -2,6 +2,13 @@
 
 public class Enemy : Character
 {
+    public static Enemy Instance { private set; get; }
+
+    private void Start()
+    {
+        Instance = this;
+    }
+
     private void Update()
     {
         if(Player.Instance.CurrentState == ECharaterState.Shoot)

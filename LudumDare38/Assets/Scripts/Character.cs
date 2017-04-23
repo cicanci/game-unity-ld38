@@ -15,18 +15,12 @@ public class Character : MonoBehaviour
         Defeated
     }
 
-    public static Character Instance { private set; get; }
     public ECharaterState CurrentState { private set; get; }
 
     private void Awake()
     {
-        Instance = this;
         CurrentState = ECharaterState.Idle;
         _playerAnimatior = GetComponent<Animator>();
-    }
-
-    private void Start()
-    {
         _playerAnimatior.Play(_animationIdle);
     }
 

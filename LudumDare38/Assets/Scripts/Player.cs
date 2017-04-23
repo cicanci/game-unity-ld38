@@ -2,8 +2,16 @@
 
 public class Player : Character
 {
+    public static Player Instance { private set; get; }
+
+    private void Start()
+    {
+        Instance = this;
+    }
+
     private void Update()
     {
+#if !UNITY_ANDROID && !UNITY_IOS
         if(Input.GetKey(KeyCode.Z))
         {
             ChangeState(ECharaterState.Shoot);
@@ -16,5 +24,6 @@ public class Player : Character
         {
             ChangeState(ECharaterState.Idle);
         }
+#endif
     }
 }
