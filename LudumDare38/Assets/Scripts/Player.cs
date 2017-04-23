@@ -2,29 +2,19 @@
 
 public class Player : Character
 {
-    private void Awake()
-    {
-        _playerAnimatior = GetComponent<Animator>();
-    }
-
-    private void Start()
-    {
-        _playerAnimatior.Play(_animationIdle);
-    }
-
     private void Update()
     {
         if(Input.GetKey(KeyCode.Z))
         {
-            _playerAnimatior.Play(_animationShoot);
+            ChangeState(ECharaterState.Shoot);
         }
         else if(Input.GetKey(KeyCode.X))
         {
-            _playerAnimatior.Play(_animationDefeated);
+            ChangeState(ECharaterState.Defeated);
         }
         else
         {
-            _playerAnimatior.Play(_animationIdle);
+            ChangeState(ECharaterState.Idle);
         }
     }
 }
