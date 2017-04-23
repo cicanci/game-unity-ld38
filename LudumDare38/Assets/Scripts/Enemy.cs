@@ -15,9 +15,9 @@ public class Enemy : Character
         {
             ChangeState(ECharaterState.Defeated);
         }
-        else if (Player.Instance.CurrentState == ECharaterState.Defeated)
+        else if (Player.Instance.CurrentState == ECharaterState.Draw)
         {
-            ChangeState(ECharaterState.Shoot);
+            ChangeState(ECharaterState.Draw);
         }
         else
         {

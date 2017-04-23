@@ -7,7 +7,7 @@ public class Player : Character
     private void Start()
     {
         Instance = this;
-        MessageBox.Instance.SetMessage("You are a pain in the ass", false);
+        MessageBox.Instance.SetMessage("The world is too small for both of us!", false);
     }
 
     private void Update()
@@ -15,11 +15,14 @@ public class Player : Character
 #if !UNITY_ANDROID && !UNITY_IOS
         if(Input.GetKey(KeyCode.Z))
         {
-            ChangeState(ECharaterState.Shoot);
-        }
-        else if(Input.GetKey(KeyCode.X))
-        {
-            ChangeState(ECharaterState.Defeated);
+            if (Input.GetKey(KeyCode.X))
+            {
+                ChangeState(ECharaterState.Shoot);
+            }
+            else
+            {
+                ChangeState(ECharaterState.Draw);
+            }
         }
         else
         {
