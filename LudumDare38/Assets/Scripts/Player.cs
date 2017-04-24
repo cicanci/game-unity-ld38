@@ -8,8 +8,7 @@ public class Player : Character
     {
         Instance = this;
 
-        MessageBox.Instance.SetMessage("The world is too small for both of us!", 
-            MessageBox.EPlayer.Player1);
+        MessageBox.Instance.SetMessage("The world is too small for both of us!", MessageBox.EPlayer.Player1);
     }
 
     private void Update()
@@ -41,7 +40,20 @@ public class Player : Character
 
     public void ActionShoot()
     {
-        ChangeState(ECharaterState.Shoot);
+        if (Enemy.Instance.CurrentState == ECharaterState.Draw)
+        {
+            ChangeState(ECharaterState.Shoot);
+            Enemy.Instance.ChangeState(ECharaterState.Defeated);
+
+            MessageBox.Instance.SetMessage("The world is mine! Muahaha", MessageBox.EPlayer.Player1, false);
+        }
+        else
+        {
+            ChangeState(ECharaterState.Defeated);
+            Enemy.Instance.ChangeState(ECharaterState.Draw);
+
+            MessageBox.Instance.SetMessage("That's not fair play, you can't shoot if I didn't draw! \nThe world is mine now!", MessageBox.EPlayer.Player2, false);
+        }
     }
 
     public void ActionIdle()

@@ -6,7 +6,8 @@ public class MessageBox : MonoBehaviour
 {
     private Text _messageBox;
     private RawImage _imageBox;
-    private float _defaultDismissTime = 3.0f;
+    private const float _defaultDismissTime = 3.0f;
+    private Coroutine _showMessage;
 
     public enum EPlayer
     {
@@ -26,6 +27,12 @@ public class MessageBox : MonoBehaviour
 
     public void SetMessage(string message, EPlayer player, bool dismiss = true)
     {
+        if (_showMessage != null)
+        {
+            StopCoroutine(_showMessage);
+            _showMessage = null;
+        }
+
         _messageBox.text = message;
 
         if (player == EPlayer.Player2)
@@ -37,7 +44,7 @@ public class MessageBox : MonoBehaviour
             _imageBox.uvRect = new Rect(0, 0, 1, 1);
         }
 
-        StartCoroutine(ShowMessage(dismiss));
+        _showMessage = StartCoroutine(ShowMessage(dismiss));
     }
 
     private IEnumerator ShowMessage(bool dismiss = true)
@@ -50,5 +57,7 @@ public class MessageBox : MonoBehaviour
 
             _imageBox.gameObject.SetActive(false);
         }
+
+        _showMessage = null;
     }
 }

@@ -4,8 +4,8 @@ using System.Collections;
 public class Enemy : Character
 {
     private Coroutine _enemyAction;
-    private float _minActionTime = 1.0f;
-    private float _maxActionTime = 2.0f;
+    private const float _minActionTime = 0.5f;
+    private const float _maxActionTime = 1.0f;
 
     public static Enemy Instance { private set; get; }
     
@@ -16,17 +16,9 @@ public class Enemy : Character
 
     private void Update()
     {
-        if (!IsDefeated)
+        if ((!IsDefeated) && (!Player.Instance.IsDefeated))
         {
-            if ((Player.Instance.CurrentState == ECharaterState.Shoot) &&
-                (CurrentState == ECharaterState.Draw))
-            {
-                ChangeState(ECharaterState.Defeated);
-
-                MessageBox.Instance.SetMessage("The world is mine! Muahaha",
-                    MessageBox.EPlayer.Player1, false);
-            }
-            else if (Player.Instance.CurrentState == ECharaterState.Draw)
+             if (Player.Instance.CurrentState == ECharaterState.Draw)
             {
                 if (_enemyAction == null)
                 {
@@ -44,8 +36,36 @@ public class Enemy : Character
 
         yield return new WaitForSeconds(Random.Range(_minActionTime, _maxActionTime));
 
-        ChangeState(ECharaterState.Idle);
+        if ((!IsDefeated) && (!Player.Instance.IsDefeated))
+        {
+            if (Random.value % 0 == 2)
+            {
+                ChangeState(ECharaterState.Idle);
+            }
+            else
+            {
+                ActionShoot();
+            }
+        }
 
         _enemyAction = null;
+    }
+
+    private void ActionShoot()
+    {
+        if (Player.Instance.CurrentState == ECharaterState.Draw)
+        {
+            ChangeState(ECharaterState.Shoot);
+            Player.Instance.ChangeState(ECharaterState.Defeated);
+
+            MessageBox.Instance.SetMessage("The world is mine! Muahaha", MessageBox.EPlayer.Player2, false);
+        }
+        else
+        {
+            ChangeState(ECharaterState.Defeated);
+            Player.Instance.ChangeState(ECharaterState.Draw);
+
+            MessageBox.Instance.SetMessage("That's not fair play, you can't shoot if I didn't draw! \nThe world is mine now!", MessageBox.EPlayer.Player1, false);
+        }
     }
 }
