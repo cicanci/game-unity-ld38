@@ -38,7 +38,7 @@ public class Enemy : Character
 
         if ((!IsDefeated) && (!Player.Instance.IsDefeated))
         {
-            if (Random.value % 0 == 2)
+            if (Random.value <= 0.5f)
             {
                 ChangeState(ECharaterState.Idle);
             }

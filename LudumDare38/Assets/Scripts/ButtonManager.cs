@@ -9,7 +9,11 @@ public class ButtonManager : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_ANDROID
         ButtonDraw.SetActive(true);
+#else
+        ButtonDraw.SetActive(false);
+#endif
         ButtonShoot.SetActive(false);
         ButtonPlayAgain.SetActive(false);
     }

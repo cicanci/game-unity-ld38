@@ -11,6 +11,7 @@ public class Player : Character
         MessageBox.Instance.SetMessage("The world is too small for both of us!", MessageBox.EPlayer.Player1);
     }
 
+#if !UNITY_ANDROID
     private void Update()
     {
         if ((!IsDefeated) && (!Enemy.Instance.IsDefeated))
@@ -32,6 +33,7 @@ public class Player : Character
             }
         }
     }
+#endif
 
     public void ActionDraw()
     {
