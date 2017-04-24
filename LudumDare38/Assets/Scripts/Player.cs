@@ -7,27 +7,45 @@ public class Player : Character
     private void Start()
     {
         Instance = this;
-        MessageBox.Instance.SetMessage("The world is too small for both of us!", false);
+
+        MessageBox.Instance.SetMessage("The world is too small for both of us!", 
+            MessageBox.EPlayer.Player1);
     }
 
     private void Update()
     {
-#if !UNITY_ANDROID && !UNITY_IOS
-        if(Input.GetKey(KeyCode.Z))
+        if ((!IsDefeated) && (!Enemy.Instance.IsDefeated))
         {
-            if (Input.GetKey(KeyCode.X))
+            if (Input.GetKey(KeyCode.Z))
             {
-                ChangeState(ECharaterState.Shoot);
+                if (Input.GetKey(KeyCode.X))
+                {
+                    ActionShoot();
+                }
+                else
+                {
+                    ActionDraw();
+                }
             }
             else
             {
-                ChangeState(ECharaterState.Draw);
+                ActionIdle();
             }
         }
-        else
-        {
-            ChangeState(ECharaterState.Idle);
-        }
-#endif
+    }
+
+    public void ActionDraw()
+    {
+        ChangeState(ECharaterState.Draw);
+    }
+
+    public void ActionShoot()
+    {
+        ChangeState(ECharaterState.Shoot);
+    }
+
+    public void ActionIdle()
+    {
+        ChangeState(ECharaterState.Idle);
     }
 }

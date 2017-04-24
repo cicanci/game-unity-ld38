@@ -19,6 +19,14 @@ public class Character : MonoBehaviour
 
     public ECharaterState CurrentState { private set; get; }
 
+    public bool IsDefeated
+    {
+        get
+        {
+            return (CurrentState == ECharaterState.Defeated);
+        }
+    }
+
     private void Awake()
     {
         CurrentState = ECharaterState.Idle;
@@ -28,7 +36,7 @@ public class Character : MonoBehaviour
 
     public void ChangeState(ECharaterState state)
     {
-        if (CurrentState != state)
+        if ((!IsDefeated) && (CurrentState != state))
         {
             CurrentState = state;
 
